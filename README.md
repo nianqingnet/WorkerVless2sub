@@ -1,4 +1,4 @@
-# 优选订阅生成器 WorkerVless2sub
+# 优选订阅生成器 WorkerVless2sub -   [آموزش به زبان فارسی کلیک کنید](README-FA.md)
 
 ### 这个是一个通过 Cloudflare Workers 搭建，自动生成优选线路 VLESS / Trojan 节点订阅内容生成器 [[实现原理]](https://www.youtube.com/watch?v=p-KhFJAC4WQ&t=70s)
 
@@ -16,13 +16,20 @@ Telegram交流群：[@CMLiussss](https://t.me/CMLiussss)，**感谢[Alice Networ
      您分配到的域名是 `fuck.cloudns.biz`，则添加自定义域填入 `sub.fuck.cloudns.biz`即可；
    - 按照 Cloudflare 的要求将返回你的域名DNS服务商，添加 该自定义域 `sub`的 CNAME记录 `WorkerVless2sub.pages.dev` 后，点击 `激活域`即可。
 
-### 3. 修改 快速订阅入口 以及 添加内置 Vless 节点信息：
+### 3. 修改 快速订阅入口 以及 添加内置节点信息：
 
   例如您的pages项目域名为：`sub.fuck.cloudns.biz`；
-   - 添加 `TOKEN` 变量，快速订阅访问入口，默认值为: `auto` ，获取订阅器默认节点订阅地址即 `/auto` ，例如 `https://sub.fuck.cloudns.biz/auto`
+   - 添加 `TOKEN` 变量，快速订阅访问入口，默认值为: `auto` ，获取订阅器默认节点订阅地址即 `/auto` ，例如 `https://sub.fuck.cloudns.biz/auto`；
+
+**添加 VLESS 内置节点信息**
    - 添加 `HOST` 变量，例如 `edgetunnel-2z2.pages.dev`；
    - 添加 `UUID` 变量，例如 `30e9c5c8-ed28-4cd9-b008-dc67277f8b02`；
-   - 添加 `PATH` 变量，例如 `/?ed=2048`；
+   - 添加 `PATH` 变量，例如 `/?ed=2560`；
+
+**添加 Trojan 内置节点信息**
+   - 添加 `HOST` 变量，例如 `hbpb.us.kg`；
+   - 添加 `PASSWORD` 变量，例如 `bpb-trojan`；
+   - 添加 `PATH` 变量，例如 `/tr?ed=2560`；
 
 ### 4. 添加你的专属优选线路：
 
@@ -60,14 +67,20 @@ Telegram交流群：[@CMLiussss](https://t.me/CMLiussss)，**感谢[Alice Networ
    - 将 [worker.js](https://github.com/cmliu/WorkerVless2sub/blob/main/_worker.js)  的内容粘贴到 Worker 编辑器中。
 
 
-### 2. 修改 快速订阅入口 以及 添加内置 Vless 节点信息：
+### 2. 修改 快速订阅入口 以及 添加内置节点信息：
 
   例如您的workers项目域名为：`sub.cmliussss.workers.dev`；
-   - 添加 `TOKEN` 变量，快速订阅访问入口，默认值为: `auto` ，获取订阅器默认节点订阅地址即 `/auto` ，例如 `https://sub.cmliussss.workers.dev/auto`
+   - 添加 `TOKEN` 变量，快速订阅访问入口，默认值为: `auto` ，获取订阅器默认节点订阅地址即 `/auto` ，例如 `https://sub.cmliussss.workers.dev/auto`；
+
+**添加 VLESS 内置节点信息**
    - 添加 `HOST` 变量，例如 `edgetunnel-2z2.pages.dev`；
    - 添加 `UUID` 变量，例如 `30e9c5c8-ed28-4cd9-b008-dc67277f8b02`；
-   - 添加 `PATH` 变量，例如 `/?ed=2048`；
+   - 添加 `PATH` 变量，例如 `/?ed=2560`；
 
+**添加 Trojan 内置节点信息**
+   - 添加 `HOST` 变量，例如 `hbpb.us.kg`；
+   - 添加 `PASSWORD` 变量，例如 `bpb-trojan`；
+   - 添加 `PATH` 变量，例如 `/tr?ed=2560`；
 
 ### 3. 添加你的专属优选线路：
 
@@ -176,6 +189,9 @@ Telegram交流群：[@CMLiussss](https://t.me/CMLiussss)，**感谢[Alice Networ
 | TOKEN | `auto` | 快速订阅内置节点的订阅路径地址 /auto (支持多元素, 元素之间使用`,`或`换行`作间隔)| 
 | HOST | `edgetunnel-2z2.pages.dev` | 快速订阅内置节点的伪装域名 (支持多元素, 订阅时随机获取, 元素之间使用`,`或`换行`作间隔) | 
 | UUID | `b7a392e2-4ef0-4496-90bc-1c37bb234904` | 快速订阅内置VLESS节点的UUID (与变量`PASSWORD`冲突, 共存时优先使用`PASSWORD`) | 
+| KEY | `token` | 动态UUID秘钥，使用变量`KEY`的时候，将不再启用变量`UUID`|
+| TIME | `7` | 动态UUID有效时间(单位:天)|
+| UPTIME | `3` | 动态UUID更新时间(默认:北京时间`3`点更新) |
 | PASSWORD | `bpb-trojan` | 快速订阅内置Trojan节点的password (与变量`UUID`冲突, 共存时优先使用`PASSWORD`) | 
 | PATH | `/?ed=2560` | 快速订阅内置节点的路径信息 | 
 | SNI | `www.10068.cn` | 快速订阅内置节点的SNI信息（留空则默认同`host`） | 
@@ -195,8 +211,9 @@ Telegram交流群：[@CMLiussss](https://t.me/CMLiussss)，**感谢[Alice Networ
 | SOCKS5DATA | [https://raw.github.../socks5Data](https://raw.githubusercontent.com/cmliu/WorkerVless2sub/main/socks5Data) | Socks5代理池 | 
 | PS | `【请勿测速】` | 节点名备注消息 | 
 | PROXYIP | `proxyip.fxxk.dedyn.io` | 默认分配的ProxyIP, 多ProxyIP将随机分配(支持多元素, 元素之间使用`,`或`换行`作间隔) | 
-| CMPROXYIPS | `proxyip.aliyun.fxxk.dedyn.io:HK` | 识别HK后分配对应的ProxyIP(支持多元素, 元素之间使用`,`或`换行`作间隔) | 
+| CMPROXYIPS | `proxyip.aliyun.fxxk.dedyn.io#HK` | 识别HK后分配对应的ProxyIP(支持多元素, 元素之间使用`,`或`换行`作间隔) | 
 | CFPORTS | `2053`,`2096`,`8443` | CF账户标准端口列表 |
+| LINK | `vless://b7a39...`,`vmess://ew0K...`,`https://sub...` | 补充节点的LINK, 可同时放入多个节点链接与多个订阅链接(支持多元素, 元素之间使用`,`或`换行`作间隔) |
 
 ----
 
